@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CineFlux | Discover Cinema</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- HEADER -->
+    <header class="header">
+      <div class="logo">
+        <i class="fa-solid fa-circle-play logo-icon"></i>
+        <span>CineFlux</span>
+      </div>
+      <div class="search-bar">
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search movies, genres, directors…"
+          autocomplete="off"
+        />
+        <button id="clearBtn" class="clear-btn" aria-label="Clear">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <button id="searchBtn" aria-label="Search">
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+      <div class="user-actions">
+        <button class="login-btn" id="loginTrigger">
+          <i class="fa-regular fa-user"></i><span>Sign In</span>
+        </button>
+        <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="main-container">
+      <!-- SIDEBAR -->
+      <aside class="sidebar" id="sidebar">
+        <button class="sidebar-close" id="sidebarClose" aria-label="Close menu">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <div class="sidebar-section">
+          <h3>Genres</h3>
+          <ul id="categoryList">
+            <li class="category-item active" data-id="all">
+              <i class="fa-solid fa-border-all"></i>All
+            </li>
+            <li class="category-item" data-id="28">
+              <i class="fa-solid fa-bomb"></i>Action
+            </li>
+            <li class="category-item" data-id="878">
+              <i class="fa-solid fa-rocket"></i>Sci-Fi
+            </li>
+            <li class="category-item" data-id="35">
+              <i class="fa-solid fa-face-laugh"></i>Comedy
+            </li>
+            <li class="category-item" data-id="18">
+              <i class="fa-solid fa-heart-crack"></i>Drama
+            </li>
+            <li class="category-item" data-id="53">
+              <i class="fa-solid fa-eye"></i>Thriller
+            </li>
+            <li class="category-item" data-id="27">
+              <i class="fa-solid fa-ghost"></i>Horror
+            </li>
+            <li class="category-item" data-id="10749">
+              <i class="fa-solid fa-heart"></i>Romance
+            </li>
+            <li class="category-item" data-id="16">
+              <i class="fa-solid fa-wand-magic-sparkles"></i>Animation
+            </li>
+            <li class="category-item" data-id="99">
+              <i class="fa-solid fa-camera"></i>Documentary
+            </li>
+          </ul>
+        </div>
+
+        <div class="sidebar-section">
+          <h3>Sort By</h3>
+          <ul>
+            <li class="sort-item active" data-sort="popularity.desc">
+              <i class="fa-solid fa-fire"></i>Most Popular
+            </li>
+            <li class="sort-item" data-sort="vote_average.desc">
+              <i class="fa-solid fa-star"></i>Top Rated
+            </li>
+            <li class="sort-item" data-sort="release_date.desc">
+              <i class="fa-solid fa-calendar"></i>Newest
+            </li>
+          </ul>
+        </div>
+      </aside>
+
+      <!-- MAIN -->
+      <main class="content">
+        <section class="trending-section" id="trendingSection">
+          <div class="section-header">
+            <h2 class="section-title">
+              <span class="title-accent">Trending</span> This Week
+            </h2>
+            <div class="title-line"></div>
+          </div>
+          <div class="carousel-container">
+            <div class="carousel-track" id="trendingTrack">
+              <div class="skeleton-card carousel-skel"></div>
+              <div class="skeleton-card carousel-skel"></div>
+              <div class="skeleton-card carousel-skel"></div>
+              <div class="skeleton-card carousel-skel"></div>
+              <div class="skeleton-card carousel-skel"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="grid-section">
+          <div class="section-header">
+            <h2 class="section-title" id="sectionTitle">
+              <span class="title-accent">Top</span> Rated
+            </h2>
+            <div class="title-line"></div>
+          </div>
+          <div class="movie-grid" id="topRatedGrid">
+            <div class="skeleton-card grid-skel"></div>
+            <div class="skeleton-card grid-skel"></div>
+            <div class="skeleton-card grid-skel"></div>
+            <div class="skeleton-card grid-skel"></div>
+            <div class="skeleton-card grid-skel"></div>
+            <div class="skeleton-card grid-skel"></div>
+            <div class="skeleton-card grid-skel"></div>
+            <div class="skeleton-card grid-skel"></div>
+          </div>
+          <div
+            class="load-more-wrapper"
+            id="loadMoreWrapper"
+            style="display: none"
+          >
+            <button class="load-more-btn" id="loadMoreBtn">
+              <i class="fa-solid fa-circle-plus"></i>Load More
+            </button>
+          </div>
+          <div class="error-state" id="errorState" style="display: none">
+            <i class="fa-solid fa-satellite-dish"></i>
+            <h3>Connection Error</h3>
+            <p>Something went wrong while loading movies.</p>
+            <button class="retry-btn" id="retryBtn">
+              <i class="fa-solid fa-arrows-rotate"></i>Try Again
+            </button>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- MOVIE MODAL -->
+    <div
+      id="movieModal"
+      class="modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modalTitle"
+    >
+      <div class="modal-content">
+        <button class="close-btn" id="closeModalBtn" aria-label="Close">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div class="modal-backdrop" id="modalBackdrop"></div>
+        <div class="modal-body">
+          <div class="modal-poster-wrap">
+            <img id="modalImg" src="" alt="Movie Poster" />
+            <div class="modal-poster-glow"></div>
+          </div>
+          <div class="modal-info">
+            <div class="modal-genres" id="modalGenres"></div>
+            <h2 id="modalTitle"></h2>
+            <div class="modal-meta">
+              <span class="rating-badge"
+                ><i class="fa-solid fa-star"></i
+                ><span id="modalRatingVal">—</span></span
+              >
+              <span class="meta-dot">·</span>
+              <span class="release-date" id="modalDate"></span>
+              <span class="meta-dot">·</span>
+              <span class="runtime" id="modalRuntime"></span>
+            </div>
+            <p id="modalDesc"></p>
+            <div class="modal-actions">
+              <button class="play-trailer-btn" id="playTrailerBtn">
+                <i class="fa-solid fa-play"></i>Watch Trailer
+              </button>
+              <button
+                class="watchlist-btn"
+                id="watchlistBtn"
+                aria-label="Watchlist"
+              >
+                <i class="fa-regular fa-bookmark"></i>
+              </button>
+            </div>
+            <div class="modal-cast" id="modalCast"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TRAILER MODAL -->
+    <div
+      id="trailerModal"
+      class="trailer-modal"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div class="trailer-content">
+        <button
+          class="trailer-close"
+          id="closeTrailerBtn"
+          aria-label="Close trailer"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div class="trailer-frame-wrap">
+          <iframe
+            id="trailerFrame"
+            src=""
+            frameborder="0"
+            allowfullscreen
+            allow="
+              accelerometer;
+              autoplay;
+              clipboard-write;
+              encrypted-media;
+              gyroscope;
+              picture-in-picture;
+            "
+          ></iframe>
+        </div>
+      </div>
+    </div>
+
+    <!-- LOGIN MODAL -->
+    <div id="loginModal" class="login-modal" role="dialog" aria-modal="true">
+      <div class="login-content">
+        <button
+          class="close-btn login-close"
+          id="closeLoginBtn"
+          aria-label="Close"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div class="login-logo">
+          <i class="fa-solid fa-circle-play"></i> CineFlux
+        </div>
+        <h2>Welcome Back</h2>
+        <p class="login-sub">Sign in for a personalised cinema experience.</p>
+        <div class="login-form">
+          <div class="form-group">
+            <i class="fa-regular fa-envelope"></i
+            ><input type="email" placeholder="Email address" />
+          </div>
+          <div class="form-group">
+            <i class="fa-solid fa-lock"></i
+            ><input type="password" placeholder="Password" />
+          </div>
+          <button class="form-submit-btn">Sign In</button>
+          <p class="login-note">
+            Portfolio project — do not enter real credentials.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="footer-logo">
+          <i class="fa-solid fa-circle-play"></i> CineFlux
+        </div>
+        <p>Crafted with modern web technologies &copy; 2026</p>
+        <p class="tmdb-credit">
+          <img
+            src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_short-8e7b30f73a4020692ccca9c88bafe5dcb6f8a62a4c6bc55cd9ba82bb2cd95f6c.svg"
+            alt="TMDB"
+            height="13"
+          />
+          Uses the TMDB API but is not endorsed or certified by TMDB.
+        </p>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
