@@ -2,7 +2,7 @@
 
 CineFlux is a modern, luxury-themed (Navy & Gold) film discovery platform built for cinema enthusiasts. Powered by **The Movie Database (TMDB) API** integration, it dynamically fetches, filters, and displays up-to-date, popular, and top-rated movies, providing detailed insights and seamless trailer playback.
 
-> 🚀 **Live Demo:** [Insert your live deployment link here]
+> 🚀 **Live Demo:** https://edayavuz6.github.io/CineFux/
 
 ---
 
