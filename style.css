@@ -1,10 +1,4 @@
-/* =====================================================
-   CineFlux — Navy & Gold Luxury Theme
-   Cormorant Garamond (headings) + DM Sans (body)
-   ===================================================== */
-
 :root {
-  /* Navy depth */
   --navy-900: #03040f;
   --navy-800: #070b1a;
   --navy-700: #0d1228;
@@ -12,7 +6,6 @@
   --navy-500: #1a2444;
   --navy-400: #243060;
 
-  /* Gold */
   --gold-100: #fdf3d0;
   --gold-200: #f7de8a;
   --gold-300: #e8c04a;
@@ -24,13 +17,11 @@
   --grad-gold: linear-gradient(135deg, #f7de8a 0%, #c99a28 55%, #e8c04a 100%);
   --grad-gold-v: linear-gradient(180deg, #f0d060 0%, #8a6010 100%);
 
-  /* Text */
   --text-100: #eef0f8;
   --text-200: #b0b8d8;
   --text-300: #6878a8;
   --text-400: #38456a;
 
-  /* UI */
   --border-s: rgba(255, 255, 255, 0.06);
   --border-m: rgba(255, 255, 255, 0.11);
 
@@ -89,9 +80,8 @@ body {
   background: var(--gold-500);
 }
 
-/* ── HEADER ── */
 .header {
-  position: sticky;
+  position: fixed;
   top: 0;
   z-index: 200;
   height: var(--header-h);
@@ -100,7 +90,7 @@ body {
   justify-content: space-between;
   padding: 0 2rem;
   gap: 1.5rem;
-  background: rgba(3, 4, 15, 0.82);
+  background: rgba(3, 4, 15, 0.95);
   backdrop-filter: blur(24px) saturate(180%);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
   border-bottom: 1px solid var(--border-s);
@@ -262,11 +252,12 @@ body {
   transform: translateY(-7px) rotate(-45deg);
 }
 
-/* ── LAYOUT ── */
 .main-container {
   display: flex;
   flex: 1;
   overflow: hidden;
+  padding-top: var(--header-h);
+  height: 100vh;
 }
 
 .sidebar {
@@ -389,7 +380,6 @@ body {
   background: linear-gradient(to right, var(--gold-border), transparent);
 }
 
-/* ── SKELETON ── */
 @keyframes shimmer {
   0% {
     background-position: -600px 0;
@@ -427,7 +417,6 @@ body {
   height: 350px;
 }
 
-/* ── CAROUSEL ── */
 .trending-section {
   margin-bottom: 3rem;
 }
@@ -467,7 +456,6 @@ body {
   }
 }
 
-/* ── CARDS ── */
 .movie-card {
   background: var(--navy-700);
   border-radius: var(--radius-m);
@@ -504,7 +492,6 @@ body {
   transform: scale(1.05);
 }
 
-/* gold shimmer on hover */
 .movie-card::after {
   content: "";
   position: absolute;
@@ -523,7 +510,6 @@ body {
   opacity: 1;
 }
 
-/* bottom fade */
 .movie-card::before {
   content: "";
   position: absolute;
@@ -721,7 +707,6 @@ body {
   margin-bottom: 0.4rem;
 }
 
-/* ── MOVIE MODAL ── */
 .modal {
   display: none;
   position: fixed;
@@ -965,7 +950,6 @@ body {
   background: var(--gold-soft);
 }
 
-/* ── TRAILER MODAL ── */
 .trailer-modal {
   display: none;
   position: fixed;
@@ -1014,7 +998,6 @@ body {
   height: 100%;
 }
 
-/* ── LOGIN MODAL ── */
 .login-modal {
   display: none;
   position: fixed;
@@ -1128,7 +1111,6 @@ body {
   right: 14px;
 }
 
-/* ── TOAST ── */
 .toast {
   position: fixed;
   bottom: 2rem;
@@ -1155,7 +1137,6 @@ body {
   transform: translateX(-50%) translateY(0);
 }
 
-/* ── FOOTER ── */
 .footer {
   background: var(--navy-800);
   border-top: 1px solid var(--border-s);
@@ -1194,7 +1175,6 @@ body {
   filter: brightness(0) invert(1);
 }
 
-/* ── RESPONSIVE ── */
 @media (max-width: 768px) {
   .header {
     padding: 0 1rem;

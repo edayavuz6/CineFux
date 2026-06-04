@@ -1,17 +1,4 @@
-/* ============================================================
-   CineFlux — script.js
-   
-   API KEY SECURITY:
-   The API key below is kept client-side for a static portfolio
-   demo (TMDB public keys are read-only and rate-limited per IP).
-   For a production deploy, move it to a serverless function:
-     Netlify:  /netlify/functions/tmdb.js  → process.env.TMDB_KEY
-     Vercel:   /api/tmdb.js                → process.env.TMDB_KEY
-   Then change fetchMovies() to call your own endpoint instead.
-   ============================================================ */
-
 const _cfg = (() => {
-  // Obfuscated split — keeps key out of plain-text search
   const p = ["573f204", "64b09b9c", "3198a494", "06de4a870"];
   return {
     key: p.join(""),
@@ -21,7 +8,6 @@ const _cfg = (() => {
   };
 })();
 
-/* ── State ── */
 const state = {
   page: 1,
   totalPages: 1,
@@ -32,7 +18,6 @@ const state = {
   watchlist: JSON.parse(localStorage.getItem("cf_wl") || "[]"),
 };
 
-/* ── DOM helpers ── */
 const $ = (id) => document.getElementById(id);
 const $$ = (sel) => document.querySelectorAll(sel);
 
@@ -74,7 +59,6 @@ const els = {
   sidebarClose: $("sidebarClose"),
 };
 
-/* ── Toast ── */
 let _toastTimer;
 const toast = (msg) => {
   els.toast.textContent = msg;
@@ -83,7 +67,6 @@ const toast = (msg) => {
   _toastTimer = setTimeout(() => els.toast.classList.remove("show"), 3000);
 };
 
-/* ── Skeletons ── */
 const skeletons = (container, count, cls) => {
   container.innerHTML = "";
   for (let i = 0; i < count; i++) {
@@ -93,7 +76,6 @@ const skeletons = (container, count, cls) => {
   }
 };
 
-/* ── API fetch ── */
 const api = async (endpoint, params = "") => {
   try {
     const r = await fetch(
@@ -107,12 +89,10 @@ const api = async (endpoint, params = "") => {
   }
 };
 
-/* ── Section title ── */
 const setTitle = (accent, rest) => {
   els.sectionTitle.innerHTML = `<span class="title-accent">${accent}</span>${rest}`;
 };
 
-/* ── Build movie card ── */
 const makeCard = (movie) => {
   const card = document.createElement("div");
   card.className = "movie-card";
@@ -133,7 +113,6 @@ const makeCard = (movie) => {
   return card;
 };
 
-/* ── Render grid ── */
 const renderGrid = async (append = false) => {
   if (state.loading) return;
   state.loading = true;
@@ -191,7 +170,6 @@ const renderGrid = async (append = false) => {
   state.loading = false;
 };
 
-/* ── Trending carousel ── */
 const renderTrending = async () => {
   skeletons(els.trendTrack, 5, "carousel-skel");
   const data = await api("/trending/movie/week");
@@ -206,19 +184,16 @@ const renderTrending = async () => {
     els.trendTrack.appendChild(frag);
   });
 
-  // Dynamic animation speed based on content width
   requestAnimationFrame(() => {
     const w = els.trendTrack.scrollWidth / 2;
     els.trendTrack.style.animationDuration = `${Math.round(w / 32)}s`;
   });
 };
 
-/* ── Movie detail modal ── */
 const openModal = async (id) => {
   els.movieModal.classList.add("active");
   document.body.style.overflow = "hidden";
 
-  // Reset
   els.modalImg.src = "";
   els.modalTitle.textContent = "Loading…";
   els.modalDesc.textContent = "";
@@ -243,12 +218,10 @@ const openModal = async (id) => {
     return;
   }
 
-  // Poster
   els.modalImg.src = details.poster_path
     ? `${_cfg.img}${details.poster_path}`
     : "https://placehold.co/250x375/0d1228/38456a?text=No+Poster";
 
-  // Backdrop
   if (details.backdrop_path)
     els.modalBackdrop.style.backgroundImage = `url(${_cfg.imgOrig}${details.backdrop_path})`;
 
@@ -285,7 +258,6 @@ const openModal = async (id) => {
           .join(", ")}
       </span>`;
 
-  // Trailer
   const trailer = videos?.results?.find(
     (v) => v.site === "YouTube" && ["Trailer", "Teaser"].includes(v.type),
   );
@@ -296,7 +268,6 @@ const openModal = async (id) => {
     els.trailerBtn.title = "No trailer available";
   }
 
-  // Watchlist state
   const saved = state.watchlist.includes(id);
   els.watchlistBtn.classList.toggle("saved", saved);
   els.watchlistBtn.dataset.id = id;
@@ -307,7 +278,6 @@ const closeModal = () => {
   document.body.style.overflow = "";
 };
 
-/* ── Trailer ── */
 const openTrailer = (key) => {
   if (!key) {
     toast("No trailer available for this title.");
@@ -321,7 +291,6 @@ const closeTrailerFn = () => {
   els.trailerFrame.src = "";
 };
 
-/* ── Watchlist ── */
 const toggleWatchlist = (id) => {
   const n = Number(id);
   const idx = state.watchlist.indexOf(n);
@@ -337,7 +306,6 @@ const toggleWatchlist = (id) => {
   localStorage.setItem("cf_wl", JSON.stringify(state.watchlist));
 };
 
-/* ── Search ── */
 const handleSearch = () => {
   const q = els.searchInput.value.trim();
   $$(".category-item").forEach((i) => i.classList.remove("active"));
@@ -357,7 +325,6 @@ const handleSearch = () => {
   renderGrid(false);
 };
 
-/* ── Category ── */
 const handleCategory = (e) => {
   const el = e.currentTarget;
   const id = el.dataset.id;
@@ -382,7 +349,6 @@ const handleCategory = (e) => {
   renderGrid(false);
 };
 
-/* ── Sort ── */
 const handleSort = (e) => {
   $$(".sort-item").forEach((i) => i.classList.remove("active"));
   e.currentTarget.classList.add("active");
@@ -391,7 +357,6 @@ const handleSort = (e) => {
   if (state.genre !== "all" || state.query) renderGrid(false);
 };
 
-/* ── Sidebar ── */
 const openSidebar = () => {
   els.sidebar.classList.add("open");
   els.sidebarOv.classList.add("active");
@@ -405,7 +370,6 @@ const closeSidebar = () => {
   document.body.style.overflow = "";
 };
 
-/* ── Event listeners ── */
 els.searchBtn.addEventListener("click", handleSearch);
 els.searchInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter") handleSearch();
@@ -490,7 +454,6 @@ document.addEventListener("keydown", (e) => {
   else if (els.sidebar.classList.contains("open")) closeSidebar();
 });
 
-/* ── Init ── */
 document.addEventListener("DOMContentLoaded", () => {
   renderTrending();
   renderGrid(false);
