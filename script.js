@@ -1,7 +1,6 @@
 const _cfg = (() => {
-  const p = ["573f204", "64b09b9c", "3198a494", "06de4a870"];
   return {
-    key: p.join(""),
+    key: "61c3236f021b7087ff8553f8d58999a3",
     base: "https://api.themoviedb.org/3",
     img: "https://image.tmdb.org/t/p/w500",
     imgOrig: "https://image.tmdb.org/t/p/original",

@@ -81,7 +81,7 @@ body {
 }
 
 .header {
-  position: fixed;
+  position: sticky;
   top: 0;
   z-index: 200;
   height: var(--header-h);
@@ -256,8 +256,6 @@ body {
   display: flex;
   flex: 1;
   overflow: hidden;
-  padding-top: var(--header-h);
-  height: 100vh;
 }
 
 .sidebar {
