@@ -459,6 +459,7 @@ body {
   border-radius: var(--radius-m);
   overflow: hidden;
   cursor: pointer;
+  position: relative;
   border: 1px solid var(--border-s);
   display: flex;
   flex-direction: column;
